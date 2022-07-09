@@ -1,10 +1,11 @@
-div {
-   text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=VT323&display=swap');
 
 body {
     display: flex;
     justify-content: center;
+    font-family: 'Caveat Brush', cursive;
+    background-color: rgb(232, 191, 232);
+
 }
 
 #calculator {
@@ -21,6 +22,7 @@ body {
     justify-content: space-between;
 
     border-radius: 2%;
+    background-color: black;
 }
 
 #display {
@@ -28,7 +30,15 @@ body {
     height: 200px;
     margin: 0px 10px 0px 19px;
 
+    border-left: 40px;
+
+
     border-radius: 2%;
+
+    text-align: end;
+    font-size: 100px;
+
+    background-color: lightgreen;
 }
 
 #container {
@@ -64,21 +74,41 @@ body {
     padding: 10px;
 }
 
-.number {
-    border: 2px solid black;
+.number { 
     height: 85px;
     width: 85px;
 
     border-radius: 4%;
+
+    background-color: white;
 }
 
-#number-container #zero {
+.number:hover {
+    color:grey;
+}
+
+
+#number-container #equal {
     width: 190px;
+    background-color: orange;
+
 }
 
 .operator {
-    border: 2px solid black;
     height: 60px;
 
     border-radius: 4%;
+    background-color: orange;
+}
+
+.operator:hover {
+    color:grey;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 500;
 }
