@@ -44,7 +44,7 @@ const nodeNumberDivs = document.querySelectorAll(".number");
 const numberDivs = Array.from(nodeNumberDivs);
 
 // Removing "equals" from NumberDivs
-const equals = numberDivs.pop(); // equals is last element in numberDivs
+const equals = numberDivs.pop(); // "equals" is the last element in numberDivs
 
 // Event listeners for numberDivs 
 numberDivs.forEach(numberDiv => numberDiv.addEventListener("click", displayDigits));
@@ -59,27 +59,30 @@ const nodeOperatorDivs = document.querySelectorAll(".operator");
 const operatorDivs = Array.from(nodeOperatorDivs);
 
 // Removing "AC" from operatorDivs
-const AC = operatorDivs.shift();
+const AC = operatorDivs.shift(); // "AC" is the first element in operatorDivs
 
 // Clearing screen on clicking AC
 AC.addEventListener("click", clear);
 
+// Event listener for operator divs
 operatorDivs.forEach(operatorDiv => operatorDiv.addEventListener("click", displayOperator));
 
 function displayOperator(e) {
-    ;
+    // Replaces "operator" if a operator is already on newline
+    if (displayArray[displayArray.length -1] === '+'|| displayArray[displayArray.length -1] === '-'|| displayArray[displayArray.length - 1] === '*'|| displayArray[displayArray.length -1] === '/') {
+        displayArray.pop();
+        displayArray.push(e.target.textContent);
+        displayOnScreen(displayArray);
+
+    // Evaluates if two numbers and a operator present    
+    } else if ((displayArray.slice(1, displayArray.length - 1)).includes('+') || (displayArray.slice(1, displayArray.length - 1)).includes('-') || (displayArray.slice(1, displayArray.length - 1)).includes('*') || (displayArray.slice(1, displayArray.length - 1)).includes('/')) { 
+        // TODO evaluate function
+        clear();
+    }
+
+    // Adds operator if number ahead
+    else if (displayArray.length > 0 ) {
+        displayArray.push(e.target.textContent);
+        displayOnScreen(displayArray);
+    };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
