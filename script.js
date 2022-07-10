@@ -25,22 +25,34 @@ const displayArray = [];
 // Displays content on calculator screen
 function displayOnScreen(array1) {
     if (array1.length > 9) {
-        array1 = [];
-        document.querySelector("p").textContent = "This calculator only supports 10 characters at a time.";
+        clear();
+         //ADD THIS CODE
     } else {
     document.querySelector("#display").textContent = array1.join("");
-    document.querySelector("p").textContent = "";
     };
 };
 
-displayOnScreen(displayArray);
+// Clears screen
+function clear() {
+    // Empties displayArray
+    displayArray.length = 0;
+    document.querySelector("#display").textContent = displayArray.join("");
+}
 
 // Creating a list of number divs 
 const nodeNumberDivs = document.querySelectorAll(".number");
 const numberDivs = Array.from(nodeNumberDivs);
 
 // Removing "equals" from NumberDivs
-const equals = numberDivs.pop();
+const equals = numberDivs.pop(); // equals is last element in numberDivs
+
+// Event listeners for numberDivs 
+numberDivs.forEach(numberDiv => numberDiv.addEventListener("click", displayDigits));
+
+function displayDigits(e) {
+    displayArray.push(e.target.textContent);
+    displayOnScreen(displayArray);
+};
 
 //Creating a list of operators
 const nodeOperatorDivs = document.querySelectorAll(".operator");
@@ -49,16 +61,14 @@ const operatorDivs = Array.from(nodeOperatorDivs);
 // Removing "AC" from operatorDivs
 const AC = operatorDivs.shift();
 
-// Event listeners for numberDivs and operatorDivs
-numberDivs.forEach(numberDiv => numberDiv.addEventListener("click", displayDigits))
-operatorDivs.forEach(operatorDiv => operatorDiv.addEventListener("click", displayOperator))
+// Clearing screen on clicking AC
+AC.addEventListener("click", clear);
 
-function displayDigits(e) {
-    displayArray.push(e.target.textContent);
-    displayOnScreen(displayArray);
-}
+operatorDivs.forEach(operatorDiv => operatorDiv.addEventListener("click", displayOperator));
 
-
+function displayOperator(e) {
+    ;
+};
 
 
 
