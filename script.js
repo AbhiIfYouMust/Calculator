@@ -5,14 +5,18 @@ let currentNum2;
 let displayArray = [];
 
 // Operate functions
-const add = (a,b) => (a + b).toFixed(1);
-const subtract = (a,b) => (a - b).toFixed(1);
+const add = (a,b) => (a + b);
+const subtract = (a,b) => (a - b);
 const multiply = (a,b) => (a * b).toFixed(1);
-const divide = (a,b) => (a / b).toFixed(1);
+const divide = (a,b) => {
+    if (b == 0) {
+        return "click AC";
+    }
+        return (a / b).toFixed(1)};
 
 // Takes a array and appends results to displayArray
 function operate(array0) {
-    if (array0.includes('+')) {
+    if (array0.slice(1).includes('+')) {
         let index = array0.indexOf('+');
 
         arrayNum1 = array0.slice(0,index);
@@ -26,21 +30,9 @@ function operate(array0) {
         displayArray = [...result];
         displayOnScreen(displayArray);
 
-    } else if (array0.includes('-')) {
-        let index = array0.indexOf('-');
+    }
 
-        arrayNum1 = array0.slice(0,index);
-        currentNum1 = Number(arrayNum1.join(""));
-
-        arrayNum2 = array0.slice(index+1);
-        currentNum2 = Number(arrayNum2.join(""));
-
-        let result = ((subtract(currentNum1, currentNum2)).toString()).split('');
-        clear();
-        displayArray = [...result];
-        displayOnScreen(displayArray);
-
-    } else if (array0.includes('*')) {
+    else if (array0.slice(1).includes('*')) {
         let index = array0.indexOf('*');
 
         arrayNum1 = array0.slice(0,index);
@@ -54,7 +46,7 @@ function operate(array0) {
         displayArray = [...result];
         displayOnScreen(displayArray);
 
-    } else if (array0.includes('/')) {
+    } else if (array0.slice(1).includes('/')) {
         let index = array0.indexOf('/');
 
         arrayNum1 = array0.slice(0,index);
@@ -67,13 +59,32 @@ function operate(array0) {
         clear();
         displayArray = [...result];
         displayOnScreen(displayArray);
+
+    } else if (array0.includes('-')) {
+        let index = array0.indexOf("-", array0.indexOf("-") + 1);
+
+        if (index === -1) {
+            index = array0.indexOf("-");
+        }
+
+        arrayNum1 = array0.slice(0,index);
+        currentNum1 = Number(arrayNum1.join(""));
+
+        arrayNum2 = array0.slice(index+1);
+        currentNum2 = Number(arrayNum2.join(""));
+
+        let result = ((subtract(currentNum1, currentNum2)).toString()).split('');
+        clear();
+        displayArray = [...result];
+        displayOnScreen(displayArray);
     };
 };
 
 // Displays content on calculator screen
 function displayOnScreen(array1) {
-    if (array1.length > 9) {
+    if (array1.length > 10) {
         clear();
+        document.querySelector("p").textContent = "This calculator only supports 10 characters at a time.";
     } else {
     document.querySelector("#display").textContent = array1.join("");
     };
@@ -91,7 +102,16 @@ const nodeNumberDivs = document.querySelectorAll(".number");
 const numberDivs = Array.from(nodeNumberDivs);
 
 // Removing "equals" from NumberDivs
-const equals = numberDivs.pop(); // "equals" is the last element in numberDivs
+const equal = numberDivs.pop(); // "equals" is the last element in numberDivs
+
+// Operating on clicking "equals"
+equal.addEventListener("click", operateEqual);
+
+function operateEqual() {
+    if (displayArray[displayArray.length -1] !== '+'&& displayArray[displayArray.length -1] !== '-' && displayArray[displayArray.length - 1] !== '*' && displayArray[displayArray.length -1] !== '/') {
+        operate(displayArray);
+    };
+}
 
 // Event listeners for numberDivs 
 numberDivs.forEach(numberDiv => numberDiv.addEventListener("click", displayDigits));
