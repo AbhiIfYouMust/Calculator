@@ -1,32 +1,79 @@
-// Operate functions
-const add = (a,b) => a + b;
-const subtract = (a,b) => a - b;
-const multiply = (a,b) => a * b;
-const divide = (a,b) => (a / b).toFixed(1);
-
-function operate(num1, num2, operator) {
-    if (operator === "+") {
-        return add(num1, num2);
-    } else if (operator === "-") {
-        return subtract(num1, num2);
-    } else if (operator == "*") {
-        return multiply(num1, num2);
-    } else {
-        return divide(num1, num2);
-    };
-};
-
 // Declaring working pair of numbers
 let currentNum1;
 let currentNum2;
 
-const displayArray = [];
+let displayArray = [];
+
+// Operate functions
+const add = (a,b) => (a + b).toFixed(1);
+const subtract = (a,b) => (a - b).toFixed(1);
+const multiply = (a,b) => (a * b).toFixed(1);
+const divide = (a,b) => (a / b).toFixed(1);
+
+// Takes a array and appends results to displayArray
+function operate(array0) {
+    if (array0.includes('+')) {
+        let index = array0.indexOf('+');
+
+        arrayNum1 = array0.slice(0,index);
+        currentNum1 = Number(arrayNum1.join(""));
+
+        arrayNum2 = array0.slice(index+1);
+        currentNum2 = Number(arrayNum2.join(""));
+
+        let result = ((add(currentNum1, currentNum2)).toString()).split(''); // result is ['2','2'] instead of [22]
+        clear();
+        displayArray = [...result];
+        displayOnScreen(displayArray);
+
+    } else if (array0.includes('-')) {
+        let index = array0.indexOf('-');
+
+        arrayNum1 = array0.slice(0,index);
+        currentNum1 = Number(arrayNum1.join(""));
+
+        arrayNum2 = array0.slice(index+1);
+        currentNum2 = Number(arrayNum2.join(""));
+
+        let result = ((subtract(currentNum1, currentNum2)).toString()).split('');
+        clear();
+        displayArray = [...result];
+        displayOnScreen(displayArray);
+
+    } else if (array0.includes('*')) {
+        let index = array0.indexOf('*');
+
+        arrayNum1 = array0.slice(0,index);
+        currentNum1 = Number(arrayNum1.join(""));
+
+        arrayNum2 = array0.slice(index+1);
+        currentNum2 = Number(arrayNum2.join(""));
+
+        let result = ((multiply(currentNum1, currentNum2)).toString()).split('');
+        clear();
+        displayArray = [...result];
+        displayOnScreen(displayArray);
+
+    } else if (array0.includes('/')) {
+        let index = array0.indexOf('/');
+
+        arrayNum1 = array0.slice(0,index);
+        currentNum1 = Number(arrayNum1.join(""));
+
+        arrayNum2 = array0.slice(index+1);
+        currentNum2 = Number(arrayNum2.join(""));
+
+        let result = ((divide(currentNum1, currentNum2)).toString()).split('');
+        clear();
+        displayArray = [...result];
+        displayOnScreen(displayArray);
+    };
+};
 
 // Displays content on calculator screen
 function displayOnScreen(array1) {
     if (array1.length > 9) {
         clear();
-         //ADD THIS CODE
     } else {
     document.querySelector("#display").textContent = array1.join("");
     };
@@ -77,7 +124,9 @@ function displayOperator(e) {
     // Evaluates if two numbers and a operator present    
     } else if ((displayArray.slice(1, displayArray.length - 1)).includes('+') || (displayArray.slice(1, displayArray.length - 1)).includes('-') || (displayArray.slice(1, displayArray.length - 1)).includes('*') || (displayArray.slice(1, displayArray.length - 1)).includes('/')) { 
         // TODO evaluate function
-        clear();
+        operate(displayArray);
+        displayArray.push(e.target.textContent);
+        displayOnScreen(displayArray);
     }
 
     // Adds operator if number ahead
