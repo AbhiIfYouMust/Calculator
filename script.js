@@ -84,7 +84,7 @@ function operate(array0) {
 function displayOnScreen(array1) {
     if (array1.length > 10) {
         clear();
-        document.querySelector("p").textContent = "This calculator only supports 10 characters at a time.";
+        document.querySelector("p").textContent = "This calculator only supports 10 characters at a time. Screen will be cleared on adding 11th character.";
     } else {
     document.querySelector("#display").textContent = array1.join("");
     };
